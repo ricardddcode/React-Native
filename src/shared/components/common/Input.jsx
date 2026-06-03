@@ -1,6 +1,5 @@
-
 import { TextInput, View, Text, StyleSheet } from "react-native";
-import { COLORS, SPACING, FONT_SIZE } from "../../constants/theme"
+import { COLORS, SPACING, FONT_SIZE } from "../../constants/theme";
 
 const Input = ({ label, error, ...props }) => {
     return (
@@ -13,8 +12,8 @@ const Input = ({ label, error, ...props }) => {
             />
             {error && <Text style={styles.errorText}>{error}</Text>}
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -46,3 +45,5 @@ const styles = StyleSheet.create({
         marginTop: SPACING.xs,
     },
 });
+
+export default Input;

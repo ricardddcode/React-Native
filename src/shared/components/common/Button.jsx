@@ -15,7 +15,7 @@ const Button = ({
         <TouchableOpacity
             style={[
                 styles.button,
-                isSecondary ? styles.secondary : styles.primary,
+                isSecondary ? styles.buttonSecondary : styles.buttonPrimary,
                 loading && styles.buttonDisabled,
                 style
             ]}
@@ -24,7 +24,8 @@ const Button = ({
             activeOpacity={0.8}
             {...props}
         >
-            {loading ? (<ActivityIndicator color={isSecondary ? COLORS.primary : COLORS.surface} />
+            {loading ? (
+                <ActivityIndicator color={isSecondary ? COLORS.primary : COLORS.surface} />
             ) : (
                 <Text
                     style={[
@@ -34,11 +35,10 @@ const Button = ({
                 >
                     {title}
                 </Text>
-            )
-            }
+            )}
         </TouchableOpacity>
     );
-}
+};
 
 const styles = StyleSheet.create({
     button: {

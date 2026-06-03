@@ -1,122 +1,165 @@
+ 
 import {
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Alert
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  Alert
 } from "react-native";
-
+ 
 import { useForm, Controller } from "react-hook-form";
-import { COLORS, SPACING, FONT_SIZE } from "../../../shared/constants/theme.js";
-import Input from "../../../shared/components/common/Input.jsx";
-import Button from "../../../shared/components/common/Button.jsx";
-
+ 
+import { COLORS, SPACING, FONT_SIZE } from "../../../shared/constants/theme";
+import Input from "../../../shared/components/common/Input";
+import Button from "../../../shared/components/common/Button";
+ 
 import kinalSportsLogo from "../../../../assets/kinal_sports.png";
-
-const LoginScreen = ({ navigation }) => {
-
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-            emailOrUsername: "",
-            password: "",
-        }
-    });
-
-    const onSubmit = (data) => {
-        console.log(data);
-    };
-
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-        >
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-                <View style={styles.header}>
-                    <Image
-                        source={kinalSportsLogo}
-                        style={styles.logo}
-                        resizeMode="contain"
-                    />
-                    <Text style={styles.subtitle}>Bienvenido de nuevo</Text>
-                </View>
-
-                <View style={styles.form}>
-                    <Controller
-                        control={control}
-                        rules={{ required: "Email o usuario requerido" }}
-                        render={({ field: { onChange, value } }) => (
-                            <Input
-                                label="Usuario o correo"
-                                placeholder="correo@ejemplo.com o usuario"
-                                onChangeText={onChange}
-                                value={value}
-                                error={errors.emailOrUsername?.message}
-                            />
-                        )}
-                          name="emailOrUsername"
-                    />
-
-                    <Controller
-                        control={control}
-                        name="password"
-                        rules={{ required: "La contraseña es requerida" }}
-                        render={({ field: { onChange, value } }) => (
-                            <Input
-                                label="Contraseña"
-                                placeholder="Ingresa tu contraseña"
-                                secureTextEntry
-                                onChangeText={onChange}
-                                value={value}
-                                error={errors.password?.message}
-                            />
-                        )}
-                    />
-
-                    <Button
-                        title="Iniciar sesión"
-                        onPress={handleSubmit(onSubmit)}
-                        style={styles.button}
-                    />
-                </View>
-            </ScrollView>
-        </KeyboardAvoidingView>
-    );
+ 
+const LoginScreen = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      emailOrUsername: "",
+      password: "",
+    },
+  });
+ 
+  const onSubmit = (data) => {
+    console.log(data);
+    Alert.alert("Login", "Formulario enviado correctamente");
+  };
+ 
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.header}>
+          <Image
+            source={kinalSportsLogo}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+ 
+          <Text style={styles.subtitle}>Bienvenido de nuevo</Text>
+        </View>
+ 
+        <View style={styles.form}>
+          <Controller
+            control={control}
+            name="emailOrUsername"
+            rules={{required: "El correo o usuario es obligatorio",}}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label="Email o usuario"
+                placeholder="correo@ejemplo.com o usario"
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize="none"
+                error={errors.emailOrUsername?.message}
+              />
+            )}
+            name="emailOrUsername"
+          />
+ 
+          <Controller
+            control={control}
+            name="password"
+            rules={{
+              required: "La contraseña es obligatoria",
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Contraseña"
+                secureTextEntry
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                error={errors.password?.message}
+              />
+            )}
+          />
+ 
+          <Button
+            title="Iniciar Sesión"
+            onPress={handleSubmit(onSubmit)}
+            style={styles.button}
+          />
+        </View>
+ 
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            ¿No tienes una cuenta?{" "}
+          </Text>
+ 
+          <Text style={styles.link}>Regístrate</Text>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 };
-
+ 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: COLORS.background,
-    },
-    scrollContent: {
-        flexGrow: 1,
-        padding: SPACING.xl,
-        justifyContent: "center",
-    },
-    header: {
-        alignItems: "center",
-        marginBottom: SPACING.xxl,
-    },
-    logo: {
-        height: 80,
-        width: 200,
-        marginBottom: SPACING.sm,
-    },
-    subtitle: {
-        fontSize: FONT_SIZE.lg,
-        color: COLORS.secondary,
-        marginTop: SPACING.sm,
-    },
-    form: {
-        width: "100%",
-    },
-    button: {
-        marginTop: SPACING.lg,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+ 
+  scrollContent: {
+    flexGrow: 1,
+    padding: SPACING.xl,
+    justifyContent: "center",
+  },
+ 
+  header: {
+    alignItems: "center",
+    marginBottom: SPACING.xxl,
+  },
+ 
+  logo: {
+    width: 200,
+    height: 80,
+    marginBottom: SPACING.sm,
+  },
+ 
+  subtitle: {
+    fontSize: FONT_SIZE.lg,
+    color: COLORS.secondary,
+    marginTop: SPACING.sm,
+  },
+ 
+  form: {
+    width: "100%",
+  },
+ 
+  button: {
+    marginTop: SPACING.lg,
+  },
+ 
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: SPACING.xl,
+  },
+ 
+  footerText: {
+    fontSize: FONT_SIZE.md,
+    color: COLORS.textLight,
+  },
+ 
+  link: {
+    fontSize: FONT_SIZE.md,
+    color: COLORS.primary,
+    fontWeight: "700",
+  },
 });
-
-export default Input;
+ 
+export default LoginScreen;
+ 
