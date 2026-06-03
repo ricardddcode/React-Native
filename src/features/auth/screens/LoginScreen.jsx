@@ -8,6 +8,7 @@ import {
   ScrollView,
   Platform,
   Alert
+  , TouchableOpacity
 } from "react-native";
  
 import { useForm, Controller } from "react-hook-form";
@@ -18,7 +19,7 @@ import Button from "../../../shared/components/common/Button";
  
 import kinalSportsLogo from "../../../../assets/kinal_sports.png";
  
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const {
     control,
     handleSubmit,
@@ -66,7 +67,6 @@ const LoginScreen = () => {
                 error={errors.emailOrUsername?.message}
               />
             )}
-            name="emailOrUsername"
           />
  
           <Controller
@@ -95,11 +95,11 @@ const LoginScreen = () => {
         </View>
  
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            ¿No tienes una cuenta?{" "}
-          </Text>
- 
-          <Text style={styles.link}>Regístrate</Text>
+          <Text style={styles.footerText}>¿No tienes una cuenta? </Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+            <Text style={styles.link}>Regístrate</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
